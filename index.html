@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Little Piece of My Heart</title>
+    <!-- Google Fonts: Cormorant Garamond (Elegan/Puitis) & Plus Jakarta Sans (Modern Clean) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0c0a0f;
+            color: #f3e9ed;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Latar Belakang Malam dengan Cahaya Hangat */
+        .ambient-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 20%, #2c1624 0%, #130b11 60%, #080507 100%);
+            z-index: 1;
+        }
+
+        /* Efek Bintang/Debu Cahaya Halus di Latar */
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: twinkle 4s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 0.7; transform: scale(1.2); }
+        }
+
+        /* Layar Pembuka untuk Sinkronisasi Musik & Suasana */
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(12, 10, 15, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 25px;
+            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.9s;
+        }
+
+        .welcome-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .welcome-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-style: italic;
+            font-weight: 400;
+            margin-bottom: 10px;
+            color: #fce4ec;
+            letter-spacing: 0.5px;
+        }
+
+        .welcome-subtitle {
+            font-size: 0.85rem;
+            color: #bfa5b3;
+            margin-bottom: 35px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .open-btn {
+            background: transparent;
+            color: #fce4ec;
+            border: 1px solid rgba(252, 228, 236, 0.35);
+            padding: 14px 40px;
+            font-size: 0.8rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .open-btn:hover {
+            background: #fce4ec;
+            color: #0c0a0f;
+            border-color: #fce4ec;
+            box-shadow: 0 0 35px rgba(252, 228, 236, 0.25);
+            transform: translateY(-2px);
+        }
+
+        /* Kartu Konten Utama (Glassmorphism Eksklusif) */
+        .card {
+            background: rgba(26, 18, 24, 0.65);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(252, 228, 236, 0.12);
+            padding: 55px 45px;
+            border-radius: 28px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.7);
+            z-index: 10;
+            position: relative;
+            opacity: 0;
+            transform: translateY(25px);
+            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .chapter-tag {
+            font-size: 0.68rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #d4a5bc;
+            margin-bottom: 22px;
+            font-weight: 500;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.1rem;
+            font-weight: 400;
+            margin-bottom: 24px;
+            color: #ffffff;
+            line-height: 1.3;
+        }
+
+        .message {
+            font-size: 0.98rem;
+            color: #d8c7d1;
+            line-height: 1.9;
+            font-weight: 300;
+            margin-bottom: 40px;
+            min-height: 110px;
+        }
+
+        /* Tombol Navigasi Interaktif */
+        .btn-group {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+        }
+
+        .action-btn {
+            background: #fce4ec;
+            color: #120b0f;
+            border: none;
+            padding: 13px 32px;
+            font-size: 0.8rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 20px rgba(252, 228, 236, 0.2);
+            font-weight: 500;
+        }
+
+        .action-btn:hover {
+            background: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(252, 228, 236, 0.35);
+        }
+
+        .action-btn.secondary {
+            background: transparent;
+            color: #d8c7d1;
+            border: 1px solid rgba(252, 228, 236, 0.22);
+            box-shadow: none;
+        }
+
+        .action-btn.secondary:hover {
+            background: rgba(252, 228, 236, 0.06);
+            color: #fff;
+            border-color: rgba(252, 228, 236, 0.4);
+        }
+
+        /* Navigasi Titik Lembut */
+        .dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 25px;
+        }
+
+        .dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: rgba(252, 228, 236, 0.2);
+            transition: all 0.4s;
+        }
+
+        .dot.active {
+            background: #fce4ec;
+            width: 22px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-bg"></div>
+
+    <!-- Layar Sambutan untuk Memulai Musik & Pengalaman Intim -->
+    <div class="welcome-overlay" id="welcomeOverlay">
+        <div class="welcome-title">Untuk Seseorang yang Bernama Kamu</div>
+        <div class="welcome-subtitle">Sentuh tombol di bawah untuk membuka ruang kecil ini</div>
+        <button class="open-btn" onclick="startExperience()">Mulai Membaca</button>
+    </div>
+
+    <!-- Kartu Utama -->
+    <div class="card" id="mainCard">
+        <div class="chapter-tag" id="chapterTag">01 — Pengantar</div>
+        <h1 id="cardTitle">Di Antara Ribuan Detik</h1>
+        <p class="message" id="cardMessage">
+            Seringkali, di tengah riuhnya hari-hari yang berjalan cepat, ada satu hal sederhana yang selalu berhasil membuatku berhenti sejenak: pikiran tentangmu.
+        </p>
+        <div class="btn-group" id="btnGroup">
+            <button class="action-btn" onclick="nextSlide()">Lanjut Membaca</button>
+        </div>
+        <div class="dots" id="dotsContainer">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+
+    <!-- Audio Latar Belakang (Musik Akustik/Lo-Fi Romantis dari Pixabay) -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://cdn.pixabay.com/audio/2026/08/24/audio_f03f0921cf.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Rangkaian kata-kata yang dirancang puitis dan menyentuh
+        const slides = [
+            {
+                tag: "01 — Pengantar",
+                title: "Di Antara Ribuan Detik",
+                message: "Seringkali, di tengah riuhnya hari-hari yang berjalan cepat, ada satu hal sederhana yang selalu berhasil membuatku berhenti sejenak: pikiran tentangmu."
+            },
+            {
+                tag: "02 — Tentang Kamu",
+                title: "Hal yang Paling Menenangkan",
+                message: "Bukan tentang hal-hal besar. Tapi tentang caramu tertawa, caramu memandang dunia dengan begitu tulus, dan bagaimana suaramu tanpa sadar selalu menjadi tempat paling nyaman untuk pulang."
+            },
+            {
+                tag: "03 — Kejujuran Hati",
+                title: "Ruang yang Berbeda",
+                message: "Aku tidak pernah merencanakan ini semua datang begitu saja. Tapi semenjak kamu ada di sekitarku, hari-hari biasa mendadak punya arti yang jauh lebih indah."
+            },
+            {
+                tag: "04 — Pertanyaan Tulus",
+                title: "Sebuah Harapan Kecil",
+                message: "Jadi... jika semesta mengizinkan, maukah kamu menjadi alasan di balik senyumku setiap pagi? Mau melangkah lebih dekat dan merangkai cerita baru bersamaku?"
+            }
+        ];
+
+        let currentStep = 0;
+
+        function startExperience() {
+            // Memutar musik latar secara otomatis setelah tombol diklik (mematuhi aturan browser)
+            const music = document.getElementById('bgMusic');
+            music.play().catch(err => console.log("Audio play failed:", err));
+
+            // Sembunyikan layar pembuka dengan transisi mulus
+            const overlay = document.getElementById('welcomeOverlay');
+            overlay.classList.add('hidden');
+
+            // Tampilkan kartu utama
+            setTimeout(() => {
+                const card = document.getElementById('mainCard');
+                card.classList.add('show');
+            }, 300);
+
+            createStars();
+        }
+
+        function updateDots() {
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach((dot, index) => {
+                if (index === currentStep) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentStep++;
+            const card = document.getElementById('mainCard');
+            
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(15px)';
+
+            setTimeout(() => {
+                if (currentStep < slides.length) {
+                    document.getElementById('chapterTag').innerText = slides[currentStep].tag;
+                    document.getElementById('cardTitle').innerText = slides[currentStep].title;
+                    document.getElementById('cardMessage').innerText = slides[currentStep].message;
+
+                    // Jika sudah di slide terakhir (pertanyaan ungkapan perasaan)
+                    if (currentStep === slides.length - 1) {
+                        document.getElementById('btnGroup').innerHTML = `
+                            <button class="action-btn" onclick="handleAnswer(true)">Mau banget</button>
+                            <button class="action-btn secondary" onclick="handleAnswer(false)">Pikir-pikir dulu</button>
+                        `;
+                        document.getElementById('dotsContainer').style.display = 'none';
+                    }
+
+                    updateDots();
+                }
+
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 450);
+        }
+
+        function handleAnswer(isYes) {
+            const card = document.getElementById('mainCard');
+            card.style.opacity = '0';
+            
+            setTimeout(() => {
+                document.getElementById('chapterTag').innerText = "Terima Kasih";
+                if (isYes) {
+                    document.getElementById('cardTitle').innerText = "Aku Bahagia Mendengarnya";
+                    document.getElementById('cardMessage').innerText = "Terima kasih sudah memilih untuk percaya. Mari kita jalani hari-hari ke depan dengan lebih banyak cerita indah berdua.";
+                } else {
+                    document.getElementById('cardTitle').innerText = "It's totally okay :)";
+                    document.getElementById('cardMessage').innerText = "Terima kasih sudah jujur dan membaca sampai akhir. Apapun jawabannya, keberadaanmu sudah cukup membuatku bersyukur.";
+                }
+                document.getElementById('btnGroup').innerHTML = `<button class="action-btn secondary" onclick="location.reload()">Ulangi Dari Awal</button>`;
+                
+                card.style.opacity = '1';
+            }, 450);
+        }
+
+        // Membuat efek partikel bintang kecil yang berkelap-kelip di latar belakang
+        function createStars() {
+            const container = document.body;
+            for (let i = 0; i < 30; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                const size = Math.random() * 2.5 + 1 + 'px';
+                star.style.width = size;
+                star.style.height = size;
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.top = Math.random() * 100 + 'vh';
+                star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                star.style.animationDelay = (Math.random() * 3) + 's';
+                container.appendChild(star);
+            }
+        }
+    </script>
+</body>
+</html>
